@@ -1,2 +1,17 @@
 ---
 # tasks file for shibboleth-sp
+
+- name: Shibboleth SP | Install
+  package: name={{ item }} state={{ shibbolethsp_state }}
+  with_items: "{{ shibbolethsp_packages }}"
+
+- name: Set custom configurations
+  template: 
+  src: "{{ item }}.yaml.j2"
+  dest:"{{ shibbolethsp_installation_path }}/{{ item }}.xml"
+  mode: 0644
+  owner: root
+  group: root
+notify: restart shibd
+with_items:
+ - shibboleth2

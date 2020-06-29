@@ -3,7 +3,7 @@
 - name: Shibboleth SP | Configuration files
   template: 
     src: "{{ item }}.yaml.j2"
-    dest:"{{ shibbolethsp_installation_path }}/{{ item }}.xml"
+    dest: "{{ shibbolethsp_installation_path }}/{{ item }}.xml"
     mode: 0644
     owner: root
     group: root

@@ -3,15 +3,11 @@
 - name: Shibboleth SP | Certificates
   copy:
     content: "{{ item.content }}"
-    dest: "{{ shibbolethsp_config_path }}/{{ item.filename }}"
-    owner: shibd
-    group: shibd
+    dest: "{{ shibbolethsp_installation_path }}/{{ item.filename }}"
     mode: "{{ item.mode }}"
   with_items:
     - { content: "{{ shibbolethsp_signing_key }}", filename: "sp-signing-key.pem", mode: "0600" }
     - { content: "{{ shibbolethsp_signing_cert}}", filename: "sp-signing-cert.pem", mode: "0644" }
     - { content: "{{ shibbolethsp_encrypt_key }}", filename: "sp-encrypt-key.pem", mode: "0600" }
     - { content: "{{ shibbolethsp_encrypt_cert}}", filename: "sp-encrypt-cert.pem", mode: "0644" }
-  loop_control:
-    label: "{{ shibbolethsp_installation_path }}/{{ item.filename }}"
   notify: restart shibd

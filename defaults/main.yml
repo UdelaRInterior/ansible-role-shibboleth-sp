@@ -7,7 +7,8 @@ shibbolethsp_packages:
   - shibboleth-sp2-utils
   - libapache2-mod-shib
 
-shibbolethsp_installation_path: etc/shibboleth
+shibbolethsp_state: latest
+shibbolethsp_installation_path: /etc/shibboleth
 
 #certificates
 shibbolethsp_with_certificates: true
@@ -26,6 +27,7 @@ shibbolethsp_shibboleth2xml:
     #discoveryurl: "https://" 
     remote_user: "eppn subject-id pairwise-id persistent-id"
     encryption: false    
+    signing: "false"
     sessions:
       signing: "front"
       lifetime: 28800
@@ -51,7 +53,7 @@ shibbolethsp_shibboleth2xml:
 ## apache parameters ##
 ################################
 
-#shibbolethsp_servername: "example.org"
+#shibbolethsp_server_name: "example.org"
 #shibbolethsp_server_alias: "example.org, example.com"
 #shibbolethsp_server_admin: "webmaster@localhost"
 shibbolethsp_document_root: "/var/www/"

@@ -19,7 +19,7 @@
         cookieProps to "https" for SSL-only sites. Note that while we default checkAddress to
         "false", this makes an assertion stolen in transit easier for attackers to misuse.
         -->
-        <Sessions lifetime="{{ shibbolethsp_shibboleth2xml.sessions.lifetime }}" timeout="{{ shibbolethsp_shibboleth2xml.sessions.timeout }}" relayState="ss:mem" checkAddress="false" handlerSSL="{{ shibbolethsp_shibboleth2xml.sessions.handlerssl }}" cookieProps="{{ shibbolethsp_shibboleth2xml.sessions.cookieprops }}" redirectLimit="exact">
+        <Sessions lifetime="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sessions.lifetime }}" timeout="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sessions.timeout }}" relayState="ss:mem" checkAddress="false" handlerSSL="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sessions.handlerssl }}" cookieProps="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sessions.cookieprops }}" redirectLimit="exact">
 
             <!--
             Configures SSO for a default IdP. To properly allow for >1 IdP, remove
@@ -27,7 +27,7 @@
             You can also override entityID on /Login query string, or in RequestMap/htaccess.
             -->
 
-            <SSO entityID="{{ shibbolethsp_shibboleth2xml.sso.entityid }}">SAML2</SSO>
+            <SSO entityID="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sso.entityid }}">SAML2</SSO>
 
             <!-- SAML and local-only logout. -->
             <Logout>SAML2 Local</Logout>
@@ -36,15 +36,15 @@
             <LogoutInitiator type="Admin" Location="/Logout/Admin" acl="127.0.0.1 ::1"/>
           
             <!-- Extension service that generates "approximate" metadata based on SP configuration. -->
-            <Handler type="MetadataGenerator" Location="{{ shibbolethsp_shibboleth2xml.metadata_generator.location }}" signing="{{ shibbolethsp_shibboleth2xml.metadata_generator.signing }}">
+            <Handler type="MetadataGenerator" Location="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.location }}" signing="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.signing }}">
 	      <md:Organization>
-        	<md:OrganizationName xml:lang="nl">{{ shibbolethsp_shibboleth2xml.metadata_generator.organization_name }}</md:OrganizationName>
-        	<md:OrganizationDisplayName xml:lang="en">{{ shibbolethsp_shibboleth2xml.metadata_generator.organization_display_name }}</md:OrganizationDisplayName>
-        	<md:OrganizationURL xml:lang="en">{{ shibbolethsp_shibboleth2xml.metadata_generator.organization_url }}</md:OrganizationURL>
+        	<md:OrganizationName xml:lang="nl">{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.organization_name }}</md:OrganizationName>
+        	<md:OrganizationDisplayName xml:lang="en">{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.organization_display_name }}</md:OrganizationDisplayName>
+        	<md:OrganizationURL xml:lang="en">{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.organization_url }}</md:OrganizationURL>
     	      </md:Organization>
     	      <md:ContactPerson contactType="technical">
-        	<md:SurName>{{ shibbolethsp_shibboleth2xml.metadata_generator.surname }}</md:SurName>
-        	<md:EmailAddress>{{ shibbolethsp_shibboleth2xml.metadata_generator.email }}</md:EmailAddress>
+        	<md:SurName>{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.surname }}</md:SurName>
+        	<md:EmailAddress>{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.email }}</md:EmailAddress>
     	      </md:ContactPerson>
             </Handler>
 

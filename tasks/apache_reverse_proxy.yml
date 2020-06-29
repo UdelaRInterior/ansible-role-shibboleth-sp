@@ -1,0 +1,44 @@
+---
+
+- name: install apache2
+  apt:
+    pkg: apache2
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
+#- name: add module
+#  apache2_module:
+#    state: present
+#    name: "{{item}}"
+#  with_items:
+#    - rewrite
+#    - ssl
+#    - proxy
+#    - proxy_http
+#    - socache_shmcb
+
+- name: copy apache config
+  template:
+    src: apache.conf.j2
+    dest: "/etc/apache2/sites-available/{{inventory_hostname}}.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - apache2_restart
+
+- name: remove default apache2 site.
+  file:
+    path: /etc/apache2/sites-enabled/000-default.conf
+    state: absent
+  notify:
+    - apache2_restart
+
+- name: activate apache site.
+  file:
+    path: "/etc/apache2/sites-enabled/{{inventory_hostname}}.conf"
+    src: "/etc/apache2/sites-available/{{inventory_hostname}}.conf"
+    state: link
+  notify:
+    - apache2_restart

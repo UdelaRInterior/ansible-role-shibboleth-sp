@@ -1,0 +1,12 @@
+---
+
+- name: Shibboleth SP | Configuration
+  template: 
+  src: "{{ item }}.yaml.j2"
+  dest:"{{ shibbolethsp_installation_path }}/{{ item }}.xml"
+  mode: 0644
+  owner: root
+  group: root
+notify: restart shibd
+with_items:
+ - shibboleth2

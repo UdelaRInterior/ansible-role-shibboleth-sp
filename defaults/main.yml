@@ -41,3 +41,16 @@ shibbolethsp_shibboleth2xml:
       validate: "true"
 
 ################################
+## apache parameters ##
+################################
+
+#shibbolethsp_servername: "example.org"
+#shibbolethsp_server_alias: "example.org, example.com"
+#shibbolethsp_server_admin: "webmaster@localhost"
+shibbolethsp_document_root: "/var/www/"
+shibbolethsp_certificate: "/etc/letsencrypt/live/example.org/cert.pem"
+shibbolethsp_key: "/etc/letsencrypt/live/example.org/privkey.pem"
+shibbolethsp_chain: "/etc/letsencrypt/live/example.org/fullchain.pem"
+#shibbolethsp_require_attr: "example-attr ~ staff@.* faculty@.*"
+
+################################

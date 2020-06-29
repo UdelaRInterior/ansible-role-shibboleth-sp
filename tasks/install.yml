@@ -1,0 +1,7 @@
+---
+
+- name: Shibboleth SP | Install
+  package: name={{ item }} state={{ shibbolethsp_state }}
+  with_items: "{{ shibbolethsp_packages }}"
+
+  

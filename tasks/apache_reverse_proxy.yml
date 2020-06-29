@@ -26,14 +26,14 @@
     group: root
     mode: "0644"
   notify:
-    - apache2_restart
+    - apache2 restart
 
 - name: remove default apache2 site.
   file:
     path: /etc/apache2/sites-enabled/000-default.conf
     state: absent
   notify:
-    - apache2_restart
+    - apache2 restart
 
 - name: activate apache site.
   file:
@@ -41,4 +41,4 @@
     src: "/etc/apache2/sites-available/{{inventory_hostname}}.conf"
     state: link
   notify:
-    - apache2_restart
+    - apache2 restart

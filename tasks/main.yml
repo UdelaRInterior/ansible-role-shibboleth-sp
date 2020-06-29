@@ -5,4 +5,7 @@
 
 - include_tasks: configuration.yml
 
+- include_tasks: certificates.yml
+  when: shibbolethsp_with_certificates | bool
+
 - include_tasks: apache_reverse_proxy.yml

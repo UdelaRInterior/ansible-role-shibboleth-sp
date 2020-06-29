@@ -6,7 +6,7 @@
     name: shibd
     state: restarted
 
-- name: apache2_restart
+- name: apache2 restart
   service:
     name: apache2
     enabled: yes

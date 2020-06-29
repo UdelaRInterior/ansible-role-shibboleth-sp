@@ -92,7 +92,7 @@
             <MetadataFilter type="Signature" certificate="mdqsigner.pem" />
         </MetadataProvider>
         -->
-	      <MetadataProvider type="{{ shibbolethsp_shibboleth2xml.metadata_provider.type }}" validate="{{ shibbolethsp_shibboleth2xml.metadata_provider.validate }}" path="{{ shibbolethsp_shibboleth2xml.metadata_provider.path }}" />
+	      <MetadataProvider type="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_provider.type }}" validate="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_provider.validate }}" path="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_provider.path }}" />
 
         <!-- Map to extract attributes from SAML assertions. -->
         <AttributeExtractor type="XML" validate="true" reloadChanges="false" path="attribute-map.xml"/>
@@ -103,8 +103,8 @@
         <!-- Simple file-based resolvers for separate signing/encryption keys. -->
         <!-- BEGIN ansible managed - CredentialResolver  -->
         <CredentialResolver type="Chaining">
-          <CredentialResolver type="File" use="signing" key="sp-key.pem" certificate="sp-cert.pem"/>
-          <CredentialResolver type="File" use="encryption" key="sp-key.pem" certificate="sp-cert.pem"/>
+          <CredentialResolver type="File" use="signing" key="sp-signing-key.pem" certificate="sp-signing-cert.pem"/>
+          <CredentialResolver type="File" use="encryption" key="sp-encrypt-key.pem" certificate="sp-encrypt-cert.pem"/>
         </CredentialResolver>
         <!-- END ansible managed - CredentialResolver  -->
         </ApplicationDefaults>

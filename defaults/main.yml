@@ -9,6 +9,13 @@ shibbolethsp_packages:
 
 shibbolethsp_installation_path: etc/shibboleth
 
+#certificates
+shibbolethsp_with_certificates: true
+shibbolethsp_signing_cert: ""
+shibbolethsp_signing_key: ""
+shibbolethsp_encrypt_cert: ""
+shibbolethsp_encrypt_key: ""
+
 ################################
 ## shibboleth2.xml parameters ##
 ################################

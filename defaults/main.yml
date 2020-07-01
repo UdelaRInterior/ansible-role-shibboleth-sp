@@ -26,7 +26,7 @@ shibbolethsp_shibboleth2xml:
     #entityid: "https://example.com"
     #discoveryurl: "https://" 
     remote_user: "eppn subject-id pairwise-id persistent-id"
-    encryption: false    
+    encryption: "false"    
     signing: "false"
     sessions:
       signing: "front"

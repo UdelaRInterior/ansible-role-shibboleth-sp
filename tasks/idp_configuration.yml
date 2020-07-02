@@ -2,10 +2,9 @@
 
 - name: Shibboleth SP | add idp metadata
   template: 
-    src: " {{ item.src }} "
-    dest: " {{ item.dir }}/{{ item.name }} "
-    owner: " {{ item.user }} "
-    group: " {{ item.group }}"
+    src: "{{ item.src }}"
+    dest: "{{ item.dir }}/{{item.name }}"
+    owner: "{{ item.user }}"
+    group: "{{ item.group}}"
+  with_items: "{{ idp_metadata }}"
   notify: restart shibd
-  with_items:
-  - idp_metadata

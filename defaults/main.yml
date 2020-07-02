@@ -69,9 +69,9 @@ shibbolethsp_chain: "/etc/letsencrypt/live/example.org/fullchain.pem"
 shibbolethsp_idp_configuration: false
 idp_metadata:
   - name: idp-metadata.xml
-  - src: my-app/idp-metadata.yaml.j2
-  - dir: "{{ shibbolethsp_installation_path }}"
-  - user: myuser
-  - group: mygroup
+    src: my-app/idp-metadata.yaml.j2
+    dir: "{{ shibbolethsp_installation_path }}"
+    user: myuser
+    group: mygroup
 
 ################################

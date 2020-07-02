@@ -1,24 +1,24 @@
 ---
 
-- name: install apache2
+- name: Shibboleth SP | Install apache2
   apt:
     pkg: apache2
     state: present
     update_cache: yes
     cache_valid_time: 3600
 
-#- name: add module
-#  apache2_module:
-#    state: present
-#    name: "{{item}}"
-#  with_items:
-#    - rewrite
-#    - ssl
-#    - proxy
-#    - proxy_http
-#    - socache_shmcb
+- name: Shibboleth SP | add apache modules
+  apache2_module:
+    state: present
+    name: "{{item}}"
+  with_items:
+    - rewrite
+    - ssl
+    - proxy
+    - proxy_http
+    - socache_shmcb
 
-- name: copy apache config
+- name: Shibboleth SP | apache config
   template:
     src: apache.conf.j2
     dest: "/etc/apache2/sites-available/{{inventory_hostname}}.conf"
@@ -28,14 +28,14 @@
   notify:
     - apache2 restart
 
-- name: remove default apache2 site.
+- name: Shibboleth SP | remove default apache2 site.
   file:
     path: /etc/apache2/sites-enabled/000-default.conf
     state: absent
   notify:
     - apache2 restart
 
-- name: activate apache site.
+- name: Shibboleth SP | activate apache site.
   file:
     path: "/etc/apache2/sites-enabled/{{inventory_hostname}}.conf"
     src: "/etc/apache2/sites-available/{{inventory_hostname}}.conf"

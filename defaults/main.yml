@@ -45,7 +45,7 @@ shibbolethsp_shibboleth2xml:
       surname: "organization surname"
       email: "organization@email.com"
     metadata_provider:
-      path: "/metadata/idp-metadata.xml"
+      path: "{{ shibbolethsp_installation_path }}/metadata/idp-metadata.xml"
       type: "XML"
       validate: "true"
 

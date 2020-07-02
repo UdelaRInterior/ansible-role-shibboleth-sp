@@ -11,7 +11,7 @@ shibbolethsp_state: latest
 shibbolethsp_installation_path: /etc/shibboleth
 
 #certificates
-shibbolethsp_with_certificates: true
+shibbolethsp_with_certificates: false
 shibbolethsp_signing_cert: ""
 shibbolethsp_signing_key: ""
 shibbolethsp_encrypt_cert: ""
@@ -45,12 +45,12 @@ shibbolethsp_shibboleth2xml:
       surname: "organization surname"
       email: "organization@email.com"
     metadata_provider:
-      path: "{{ shibbolethsp_installation_path }}/metadata/idp-metadata.xml"
+      path: "{{ shibbolethsp_installation_path }}/{{ idp_metadata.name }}"
       type: "XML"
       validate: "true"
 
 ################################
-## apache parameters ##
+## apache parameters ###########
 ################################
 
 #shibbolethsp_server_name: "example.org"
@@ -61,5 +61,17 @@ shibbolethsp_certificate: "/etc/letsencrypt/live/example.org/cert.pem"
 shibbolethsp_key: "/etc/letsencrypt/live/example.org/privkey.pem"
 shibbolethsp_chain: "/etc/letsencrypt/live/example.org/fullchain.pem"
 #shibbolethsp_require_attr: "example-attr ~ staff@.* faculty@.*"
+
+##################################
+## idp configuration parameters ##
+##################################
+
+shibbolethsp_idp_configuration: false
+idp_metadata:
+  - name: idp-metadata.xml
+  - src: my-app/idp-metadata.yaml.j2
+  - dir: "{{ shibbolethsp_installation_path }}"
+  - user: myuser
+  - group: mygroup
 
 ################################

@@ -2,12 +2,13 @@
 
 - name: Shibboleth SP | Configuration files
   template: 
-    src: "{{ item }}.yaml.j2"
-    dest: "{{ shibbolethsp_installation_path }}/{{ item }}.xml"
+    src: "{{ item }}.j2"
+    dest: "{{ shibbolethsp_installation_path }}/{{ item }}"
     mode: 0644
     owner: root
     group: root
   notify: restart shibd
   with_items:
-  - shibboleth2
+  - shibboleth2.xml
+  - attribute-map.xml
 

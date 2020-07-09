@@ -53,6 +53,10 @@ shibbolethsp_shibboleth2xml:
 ## apache parameters ###########
 ################################
 
+shibbolethsp_apache_packages:
+    - ssl
+    - socache_shmcb
+    
 #shibbolethsp_server_name: "example.org"
 #shibbolethsp_server_alias: "example.org, example.com"
 #shibbolethsp_server_admin: "webmaster@localhost"

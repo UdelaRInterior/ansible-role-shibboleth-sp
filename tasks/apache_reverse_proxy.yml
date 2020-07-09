@@ -11,12 +11,7 @@
   apache2_module:
     state: present
     name: "{{item}}"
-  with_items:
-    - rewrite
-    - ssl
-    - proxy
-    - proxy_http
-    - socache_shmcb
+  with_items: "{{ shibbolethsp_apache_packages }}"
 
 - name: Shibboleth SP | apache config
   template:

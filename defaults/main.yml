@@ -53,8 +53,8 @@ shibbolethsp_shibboleth2xml:
 ## attribute-map parameters ####
 ################################
 
-#you may need uncomment this if you are using ldap
-#shibbolethsp_ldap_attributes: 
+#you may need uncomment this if you are using extra attributes
+#shibbolethsp_custom_attributes: 
 #  - name: "urn:oid:2.5.4.3"
 #    id: "cn"
 #  - name: "urn:oid:0.9.2342.19200300.100.1.1"

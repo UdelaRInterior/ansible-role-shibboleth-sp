@@ -150,15 +150,15 @@
 
                 <Location />
                         AuthType shibboleth
-                #        ShibUseHeaders On
                         Require shibboleth
                 </Location>
 
                 <Location /secure>
                         AuthType shibboleth
-                #        ShibUseHeaders On
                         ShibRequestSetting requireSession 1
+						{% if shibbolethsp_require_attr is defined %}
                         Require shib-attr  {{ shibbolethsp_require_attr }} 
+						{% endif %}
                 </Location>
 
 		#LimitRequestLine 10000000000

@@ -66,6 +66,7 @@ shibbolethsp_shibboleth2xml:
 ## apache parameters ###########
 ################################
 
+shibbolethsp_with_apache: false
 shibbolethsp_apache_packages:
     - ssl
     - socache_shmcb

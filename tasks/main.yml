@@ -9,7 +9,7 @@
   when: shibbolethsp_with_certificates | bool
 
 - include_tasks: apache_reverse_proxy.yml
-   when: shibbolethsp_with_apache | bool
+  when: shibbolethsp_with_apache | bool
 
 - include_tasks: idp_configuration.yml
   when: shibbolethsp_idp_configuration | bool

@@ -15,33 +15,35 @@ shibbolethsp_installation_path: /etc/shibboleth
 ## shibboleth2.xml parameters ##
 ################################
 
+#you can uncomment and add as var what you consider
+#but entityid and discoveryurl are needed
 shibbolethsp_shibboleth2xml:
   applicationDefaults:
     #entityid: "https://example.com"
     #discoveryurl: "https://" 
-    remote_user: "eppn subject-id pairwise-id persistent-id"
-    encryption: "false"    
-    signing: "false"
-    sessions:
-      signing: "front"
-      lifetime: 28800
-      timeout: 3600
-      handlerssl: "true"
-      cookieprops: "https"
+    #remote_user: "eppn subject-id pairwise-id persistent-id"
+    #encryption: "false"    
+    #signing: "false"
+    #sessions:
+      #signing: "front"
+      #lifetime: 28800
+      #timeout: 3600
+      #handlerssl: "true"
+      #cookieprops: "https"
     sso:
       #entityid: "https://login.example.com/idp/shibboleth"
-    metadata_generator:
-      location: "/Metadata"
-      signing: "false"
-      organization_name: "org name"
-      organization_display_name: "org name"
-      organization_url: "organization.com"
-      surname: "organization surname"
-      email: "organization@email.com"
-    metadata_provider:
-      path: "{{ idp_metadata.dir }}/{{ idp_metadata.name }}"
-      type: "XML"
-      validate: "true"
+    #metadata_generator:
+      #location: "/Metadata"
+      #signing: "false"
+      #organization_name: "org name"
+      #organization_display_name: "org name"
+      #organization_url: "organization.com"
+      #surname: "organization surname"
+      #email: "organization@email.com"
+    #metadata_provider:
+      #path: "{{ idp_metadata.dir }}/{{ idp_metadata.name }}"
+      #type: "XML"
+      #validate: "true"
 
 ################################
 ## attribute-map parameters ####

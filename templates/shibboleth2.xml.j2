@@ -1,5 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<SPConfig xmlns="urn:mace:shibboleth:3.0:native:sp:config" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:conf="urn:mace:shibboleth:3.0:native:sp:config" clockSkew="180">
+<SPConfig 
+  xmlns="urn:mace:shibboleth:3.0:native:sp:config" 
+  xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" 
+  xmlns:conf="urn:mace:shibboleth:3.0:native:sp:config" 
+  clockSkew="180"
+>
 
     <OutOfProcess tranLogFormat="%u|%s|%IDP|%i|%ac|%t|%attr|%n|%b|%E|%S|%SS|%L|%UA|%a"/>
   
@@ -9,7 +14,26 @@
     -->
 
     <!-- The ApplicationDefaults element is where most of Shibboleth's SAML bits are defined. -->
-    <ApplicationDefaults entityID="{{ shibbolethsp_shibboleth2xml.applicationDefaults.entityid }}" REMOTE_USER="{{ shibbolethsp_shibboleth2xml.applicationDefaults.remote_user }}" cipherSuites="DEFAULT:!EXP:!LOW:!aNULL:!eNULL:!DES:!IDEA:!SEED:!RC4:!3DES:!kRSA:!SSLv2:!SSLv3:!TLSv1:!TLSv1.1" signing="{{ shibbolethsp_shibboleth2xml.applicationDefaults.signing }}" encryption="{{ shibbolethsp_shibboleth2xml.applicationDefaults.encryption }}">
+    
+    <ApplicationDefaults 
+     entityID="{{ shibbolethsp_shibboleth2xml.applicationDefaults.entityid }}"
+     {% if shibbolethsp_shibboleth2xml.applicationDefaults.remote_user is defined %}
+     REMOTE_USER="{{ shibbolethsp_shibboleth2xml.applicationDefaults.remote_user }}"
+     {% else %} 
+     REMOTE_USER="eppn subject-id pairwise-id persistent-id"
+     {% endif %}
+     cipherSuites="DEFAULT:!EXP:!LOW:!aNULL:!eNULL:!DES:!IDEA:!SEED:!RC4:!3DES:!kRSA:!SSLv2:!SSLv3:!TLSv1:!TLSv1.1"
+     {% if shibbolethsp_shibboleth2xml.applicationDefaults.signing is defined %}
+     signing="{{ shibbolethsp_shibboleth2xml.applicationDefaults.signing }}" 
+     {% else %}
+     signing="false"
+     {% endif %}
+     {% if shibbolethsp_shibboleth2xml.applicationDefaults.encryption is defined %}
+     encryption="{{ shibbolethsp_shibboleth2xml.applicationDefaults.encryption }}" 
+     {% else %}
+     encryption="false"
+     {% endif %}
+     >
 
         <!--
         Controls session lifetimes, address checks, cookie handling, and the protocol handlers.
@@ -19,7 +43,31 @@
         cookieProps to "https" for SSL-only sites. Note that while we default checkAddress to
         "false", this makes an assertion stolen in transit easier for attackers to misuse.
         -->
-        <Sessions lifetime="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sessions.lifetime }}" timeout="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sessions.timeout }}" relayState="ss:mem" checkAddress="false" handlerSSL="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sessions.handlerssl }}" cookieProps="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sessions.cookieprops }}" redirectLimit="exact">
+        <Sessions 
+        {% if shibbolethsp_shibboleth2xml.applicationDefaults.sessions.lifetime is defined %}
+        lifetime="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sessions.lifetime }}"
+        {% else %}
+        lifetime="28800"
+        {% endif %}
+        {% if shibbolethsp_shibboleth2xml.applicationDefaults.sessions.timeout is defined %}
+        timeout="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sessions.timeout }}" 
+        {% else %}
+        timeout="3600" 
+        {% endif %}
+        relayState="ss:mem" 
+        checkAddress="false" 
+        {% if shibbolethsp_shibboleth2xml.applicationDefaults.sessions.handlerssl is defined %}
+        handlerSSL="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sessions.handlerssl }}"
+        {% else %}
+        handlerSSL="true"
+        {% endif %} 
+        {% if shibbolethsp_shibboleth2xml.applicationDefaults.sessions.cookieprops is defined %}
+        cookieProps="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sessions.cookieprops }}"
+        {% else %}
+        cookieProps="https"
+        {% endif %}
+        redirectLimit="exact"
+        >
 
             <!--
             Configures SSO for a default IdP. To properly allow for >1 IdP, remove
@@ -27,7 +75,9 @@
             You can also override entityID on /Login query string, or in RequestMap/htaccess.
             -->
 
-            <SSO entityID="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sso.entityid }}">SAML2</SSO>
+            <SSO 
+            entityID="{{ shibbolethsp_shibboleth2xml.applicationDefaults.sso.entityid }}"
+            >SAML2</SSO>
 
             <!-- SAML and local-only logout. -->
             <Logout>SAML2 Local</Logout>
@@ -36,16 +86,46 @@
             <LogoutInitiator type="Admin" Location="/Logout/Admin" acl="127.0.0.1 ::1"/>
           
             <!-- Extension service that generates "approximate" metadata based on SP configuration. -->
-            <Handler type="MetadataGenerator" Location="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.location }}" signing="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.signing }}">
+            <Handler type="MetadataGenerator" 
+            {% if shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.location is defined %}
+            Location="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.location }}" 
+            {% else %}
+            Location="/Metadata"
+            {% endif %}
+            {% if shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.signing is defined %}
+            signing="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.signing }}"
+            {% else %}
+            signing="false"
+            {% endif %}
+            >
+            
+        {% if shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.organization_name is defined %}
 	      <md:Organization>
-        	<md:OrganizationName xml:lang="nl">{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.organization_name }}</md:OrganizationName>
-        	<md:OrganizationDisplayName xml:lang="en">{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.organization_display_name }}</md:OrganizationDisplayName>
-        	<md:OrganizationURL xml:lang="en">{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.organization_url }}</md:OrganizationURL>
-    	      </md:Organization>
-    	      <md:ContactPerson contactType="technical">
+        	<md:OrganizationName xml:lang="nl">
+          {{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.organization_name }}
+          </md:OrganizationName>
+          {% if shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.organization_display_name is defined %}
+        	<md:OrganizationDisplayName xml:lang="en">
+          {{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.organization_display_name }}
+          </md:OrganizationDisplayName>
+          {% endif %}
+          {% if shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.organization_url is defined %}
+        	<md:OrganizationURL xml:lang="en">
+          {{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.organization_url }}
+          </md:OrganizationURL>
+          {% endif %}
+    	  </md:Organization>
+        {% endif %}
+
+    	  <md:ContactPerson contactType="technical">
+          {% if shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.surname is defined %}
         	<md:SurName>{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.surname }}</md:SurName>
-        	<md:EmailAddress>{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.email }}</md:EmailAddress>
-    	      </md:ContactPerson>
+        	{% endif %}
+          {% if shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.email is defined %}
+          <md:EmailAddress>{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_generator.email }}</md:EmailAddress>
+    	    {% endif %}
+        </md:ContactPerson>
+        
             </Handler>
 
             <!-- Status reporting service. -->
@@ -92,7 +172,19 @@
             <MetadataFilter type="Signature" certificate="mdqsigner.pem" />
         </MetadataProvider>
         -->
-	      <MetadataProvider type="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_provider.type }}" validate="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_provider.validate }}" path="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_provider.path }}" />
+        {% if shibbolethsp_shibboleth2xml.applicationDefaults.metadata_provider is defined %}
+	      <MetadataProvider 
+          {% if shibbolethsp_shibboleth2xml.applicationDefaults.metadata_provider.type is defined %}
+          type="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_provider.type }}" 
+          {% endif %}
+          {% if shibbolethsp_shibboleth2xml.applicationDefaults.metadata_provider.validate is defined %}
+          validate="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_provider.validate }}" 
+          {% endif %}
+          {% if shibbolethsp_shibboleth2xml.applicationDefaults.metadata_provider.path is defined %}
+          path="{{ shibbolethsp_shibboleth2xml.applicationDefaults.metadata_provider.path }}" 
+          {% endif %}
+        />
+        {% endif %}
 
         <!-- Map to extract attributes from SAML assertions. -->
         <AttributeExtractor type="XML" validate="true" reloadChanges="false" path="attribute-map.xml"/>

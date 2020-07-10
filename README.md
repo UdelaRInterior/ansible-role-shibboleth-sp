@@ -16,6 +16,8 @@ Role Variables
 
 ```yaml
 
+# defaults file for shibboleth-sp
+
 #packages tested under debian 10
 shibbolethsp_packages:
   - python-lxml
@@ -30,33 +32,35 @@ shibbolethsp_installation_path: /etc/shibboleth
 ## shibboleth2.xml parameters ##
 ################################
 
+#you can uncomment and add as var what you consider
+#but entityid and discoveryurl are needed
 shibbolethsp_shibboleth2xml:
   applicationDefaults:
     #entityid: "https://example.com"
     #discoveryurl: "https://" 
-    remote_user: "eppn subject-id pairwise-id persistent-id"
-    encryption: "false"    
-    signing: "false"
-    sessions:
-      signing: "front"
-      lifetime: 28800
-      timeout: 3600
-      handlerssl: "true"
-      cookieprops: "https"
+    #remote_user: "eppn subject-id pairwise-id persistent-id"
+    #encryption: "false"    
+    #signing: "false"
+    #sessions:
+      #signing: "front"
+      #lifetime: 28800
+      #timeout: 3600
+      #handlerssl: "true"
+      #cookieprops: "https"
     sso:
       #entityid: "https://login.example.com/idp/shibboleth"
-    metadata_generator:
-      location: "/Metadata"
-      signing: "false"
-      organization_name: "org name"
-      organization_display_name: "org name"
-      organization_url: "organization.com"
-      surname: "organization surname"
-      email: "organization@email.com"
-    metadata_provider:
-      path: "{{ idp_metadata.dir }}/{{ idp_metadata.name }}"
-      type: "XML"
-      validate: "true"
+    #metadata_generator:
+      #location: "/Metadata"
+      #signing: "false"
+      #organization_name: "org name"
+      #organization_display_name: "org name"
+      #organization_url: "organization.com"
+      #surname: "organization surname"
+      #email: "organization@email.com"
+    #metadata_provider:
+      #path: "{{ idp_metadata.dir }}/{{ idp_metadata.name }}"
+      #type: "XML"
+      #validate: "true"
 
 ################################
 ## attribute-map parameters ####
@@ -136,39 +140,15 @@ Example Playbook
          applicationDefaults:
          entityid: "https://mysp.com"
          discoveryurl: "https://myidp.com/idp/shibboleth" 
-         remote_user: "eppn subject-id pairwise-id persistent-id"
-         encryption: "false"    
-         signing: "false"
-         sessions:
-             signing: "front"
-             lifetime: 28800
-             timeout: 3600
-             handlerssl: "true"
-             cookieprops: "https"
          sso:
              entityid: "https://myidp.com/idp/shibboleth"
          metadata_generator:
-             location: "/Metadata"
-             signing: "false"
-             organization_name: "org name"
-             organization_display_name: "org name"
-             organization_url: "organization.com"
+             organization_name: "myorg name"
+             organization_display_name: "myorg display name"
+             organization_url: "organizationurl.com"
              surname: "organization surname"
              email: "organization@email.com"
-         metadata_provider:
-             path: "{{ idp_metadata.dir }}/{{ idp_metadata.name }}"
-             type: "XML"
-             validate: "true"
-       shibbolethsp_idp_configuration: true
-       idp_metadata:
-         - name: idp-metadata.xml
-           src: my-app/idp-metadata.yaml.j2
-           dir: "{{ shibbolethsp_installation_path }}"
-           user: myuser
-           group: mygroup
        shibbolethsp_custom_attributes: 
-       - name: "urn:oid:2.5.4.3"
-         id: "cn"
        - name: "urn:oid:0.9.2342.19200300.100.1.1"
          id: uid
        - name: "urn:oid:0.9.2342.19200300.100.1.3"

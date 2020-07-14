@@ -55,7 +55,15 @@
 
     <!-- Older LDAP-defined attributes (SAML 2.0 names followed by SAML 1 names)... -->    
     {% for attribute in shibbolethsp_custom_attributes %}    
-    <Attribute name="{{ attribute.name }}" id="{{ attribute.id }}"/>
+    <Attribute name="{{ attribute.name }}" id="{{ attribute.id }}">
+        {% if attribute.attribute_decoder is defined %}
+        <AttributeDecoder 
+        {% for decoder in attribute.attribute_decoder %}
+        {{ decoder.name }}="{{ decoder.value }}" 
+        {% endfor %}
+        />
+        {% endif %}
+    </Attribute>
     {% endfor %}
  
     {% endif %} 

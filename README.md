@@ -37,7 +37,6 @@ shibbolethsp_installation_path: /etc/shibboleth
 shibbolethsp_shibboleth2xml:
   applicationDefaults:
     #entityid: "https://example.com"
-    #discoveryurl: "https://" 
     #remote_user: "eppn subject-id pairwise-id persistent-id"
     #encryption: "false"    
     #signing: "false"
@@ -74,6 +73,13 @@ shibbolethsp_shibboleth2xml:
 #    id: uid
 #  - name: "urn:oid:0.9.2342.19200300.100.1.3"
 #    id: mail
+#  - name: "urn:mace:dir:attribute-def:eduPersonAffiliation"
+#    id: unscoped-affiliation
+#    attribute_decoder:
+#      - name: "xsi:type"
+#        value: "StringAttributeDecoder"
+#      - name: "caseSensitive"
+#        value: "false"
 
 ################################
 ###certificates parameters ##
@@ -139,7 +145,6 @@ Example Playbook
        shibbolethsp_shibboleth2xml:
          applicationDefaults:
          entityid: "https://mysp.com"
-         discoveryurl: "https://myidp.com/idp/shibboleth" 
          sso:
              entityid: "https://myidp.com/idp/shibboleth"
          metadata_generator:

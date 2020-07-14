@@ -10,6 +10,8 @@ shibbolethsp_packages:
 
 shibbolethsp_state: latest
 shibbolethsp_installation_path: /etc/shibboleth
+shibbolethsp_user: "_shibd"
+shibbolethsp_group: "_shibd"
 
 ################################
 ## shibboleth2.xml parameters ##

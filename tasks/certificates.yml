@@ -5,6 +5,8 @@
     content: "{{ item.content }}"
     dest: "{{ shibbolethsp_installation_path }}/{{ item.filename }}"
     mode: "{{ item.mode }}"
+    owner: "{{ shibbolethsp_user }}" 
+    group: "{{ shibbolethsp_group }}"
   with_items:
     - { content: "{{ shibbolethsp_signing_key }}", filename: "sp-signing-key.pem", mode: "0600" }
     - { content: "{{ shibbolethsp_signing_cert}}", filename: "sp-signing-cert.pem", mode: "0644" }

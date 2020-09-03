@@ -140,14 +140,6 @@
 		#		downgrade-1.0 force-response-1.0
 		
 
-		<Directory {{ shibbolethsp_document_root }}>
-                    <Files edit_users.php>
-                         #Require all denied
-                         Order allow,deny
-                         Deny from all
-                    </Files>
-		</Directory>
-
                 <Location />
                         AuthType shibboleth
                         Require shibboleth
